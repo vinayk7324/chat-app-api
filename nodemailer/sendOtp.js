@@ -1,5 +1,5 @@
 import {createTransport} from 'nodemailer'
-import { userModel } from '../model/userModel';
+import { userModel } from '../model/userModel.js';
 let storeOtp; 
 export const sentOTP = async (req,res)=>{
 
