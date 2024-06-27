@@ -50,7 +50,12 @@ const server =  app.listen(port,()=>{
 
 const io =  new Server(server,{
     cors:{
-        origin:`https://chat-app-fronted-2.vercel.app`,
+
+       
+
+        origin:["https://chat-app-fronted-2.vercel.app"],
+        methods:["GET","POST","OPTIONS","DELETE"],
+
         credentials:true
     }
 });
