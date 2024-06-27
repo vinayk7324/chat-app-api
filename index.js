@@ -5,7 +5,7 @@ import cors from 'cors'
 import {router as authRoutes} from './router/authRoutes.js'
 import  socketIo from 'socket.io';
 import {router as messageRoutes} from './router/messagesRoutes.js'
-import {http} from 'http'
+import http from 'http'
 
 
 
