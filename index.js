@@ -3,7 +3,7 @@ import { port } from './conf.js'
 import { connectDB } from './connection/dataBase.js';
 import cors from 'cors'
 import {router as authRoutes} from './router/authRoutes.js'
-import  socketIo from 'socket.io';
+import  {Server} from 'socket.io';
 import {router as messageRoutes} from './router/messagesRoutes.js'
 import http from 'http'
 
@@ -16,7 +16,7 @@ import http from 'http'
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server,{
+const io = new Server(server,{
     cors:{
         
        
@@ -43,7 +43,7 @@ app.use(cors(
 connectDB();
 
 
-//uploading 
+
 
 
 //Routes
@@ -64,7 +64,7 @@ app.get('/',(req,res)=>{
 
 })
 
-
+const onlineUsers = new Map();
 io.on('connection',(socket)=>{
     global.chatSocket = socket;
     socket.on("add-user",(userId)=>{
