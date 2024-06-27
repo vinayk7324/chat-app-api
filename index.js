@@ -37,7 +37,9 @@ connectDB();
 
 app.use('/api/v2/auth',authRoutes);
 app.use('/api/v2/message',messageRoutes);
-
+app.get('/socket.io/', (req, res) => {
+  res.json({ message: 'CORS headers are set' });
+});
 app.get('/',(req,res)=>{
     res.send("Hello");
 
@@ -80,6 +82,11 @@ io.on('connection',(socket)=>{
         }
 
     });
+
+      socket.on('disconnect', () => {
+        console.log('A user disconnected');
+       
+    })
    
 
 })
