@@ -53,10 +53,11 @@ const io =  new Server(server,{
 
        
 
-        origin:["https://chat-app-fronted-2.vercel.app"],
-        methods:["GET","POST","OPTIONS","DELETE"],
-
-        credentials:true
+        
+            origin:["https://chat-app-fronted-2.vercel.app"],
+            methods:["GET","POST","OPTIONS","DELETE"],
+            credentials:true
+        
     }
 });
 
