@@ -3,8 +3,10 @@ import { port } from './conf.js'
 import { connectDB } from './connection/dataBase.js';
 import cors from 'cors'
 import {router as authRoutes} from './router/authRoutes.js'
-import { Socket,Server } from 'socket.io';
+import  socketIo from 'socket.io';
 import {router as messageRoutes} from './router/messagesRoutes.js'
+import {http} from 'http'
+
 
 
 
@@ -13,6 +15,17 @@ import {router as messageRoutes} from './router/messagesRoutes.js'
 
 
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server,{
+    cors:{
+        
+       
+            origin:["https://chat-app-fronted-2.vercel.app"],
+            methods:["GET","POST","OPTIONS","DELETE"],
+            credentials:true
+        
+    }
+});
 
 
 //middileware
@@ -46,26 +59,12 @@ app.get('/',(req,res)=>{
 
 })
 
-const server =  app.listen(port,()=>{
+  server.listen(port,()=>{
     console.log(`server is listening at http://localhost:${port}`);
 
 })
 
-const io =  new Server(server,{
-    cors:{
 
-       
-
-        
-       
-            origin:["https://chat-app-fronted-2.vercel.app"],
-            methods:["GET","POST","OPTIONS","DELETE"],
-            credentials:true
-        
-    }
-});
-
-global.onlineUsers = new Map();
 io.on('connection',(socket)=>{
     global.chatSocket = socket;
     socket.on("add-user",(userId)=>{
