@@ -5,6 +5,7 @@ import cors from 'cors'
 import {router as authRoutes} from './router/authRoutes.js'
 import  {Server} from 'socket.io';
 import {router as messageRoutes} from './router/messagesRoutes.js'
+import  http from "http"
 
 
 
@@ -49,11 +50,12 @@ app.get('/',(req,res)=>{
 
 })
 
-  const server = app.listen(port,()=>{
+   app.listen(port,()=>{
     console.log(`server is listening at http://localhost:${port}`);
 
 })
 
+const server = http.createServer(app);
 const io = new Server(server,{
     cors:{
         origin:["https://chat-app-fronted-2.vercel.app"],
@@ -64,6 +66,7 @@ const io = new Server(server,{
 global.onlineUsers = new Map();
 io.on('connection',(socket)=>{
     global.chatSocket = socket;
+    console.log("user connected successfully");
     socket.on("add-user",(userId)=>{
         onlineUsers.set(userId,socket.id);
 
