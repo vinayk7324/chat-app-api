@@ -1,5 +1,5 @@
 import express from 'express'
-import { port } from './conf.js'
+import { origin_url, port } from './conf.js'
 import { connectDB } from './connection/dataBase.js';
 import cors from 'cors'
 import {router as authRoutes} from './router/authRoutes.js'
@@ -22,12 +22,12 @@ const app = express();
 //middileware
 app.use(express.json());
 app.use(cors(
-    {
-       
-        origin:["https://chat-app-fronted-2.vercel.app"],
-        methods:["GET","POST","OPTIONS","DELETE"],
-        credentials:true
-    }
+{
+    origin:[origin_url],
+    
+    credentials:true
+}
+    
 ));
 
 //data base connection
@@ -50,17 +50,16 @@ app.get('/',(req,res)=>{
 
 })
 
-   app.listen(port,()=>{
+  const server = app.listen(port,()=>{
     console.log(`server is listening at http://localhost:${port}`);
 
 })
 
-const server = http.createServer(app);
+
 const io = new Server(server,{
     cors:{
-        origin:["https://chat-app-fronted-2.vercel.app"],
-        methods:["GET","POST","OPTIONS","DELETE"],
-        credentials:true
+        origin:[origin_url],
+       credentials:true
     }
 });
 global.onlineUsers = new Map();
